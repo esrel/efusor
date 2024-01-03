@@ -20,4 +20,7 @@ def scale(vector: np.ndarray) -> np.ndarray:
     :return: vector
     :rtype: np.ndarray
     """
+    if not vector.any() or vector.min() == vector.max():
+        return vector
+
     return (vector - np.min(vector)) / (np.max(vector) - np.min(vector))
