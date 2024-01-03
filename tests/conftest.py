@@ -21,6 +21,17 @@ def get_preds_scores() -> list:
     ]
 
 
+@pytest.fixture(name="weights")
+def get_weights() -> list:
+    """
+    get prediction weights (vector)
+    :return: weights
+    :rtype: list
+    """
+    return [0.75, 0.25]
+
+
+# transformations
 @pytest.fixture(name="borda_scores")
 def get_borda_scores() -> list:
     """
@@ -86,7 +97,75 @@ def get_norms() -> list:
     ]
 
 
+@pytest.fixture(name="hard_scores")
+def get_hardened() -> list:
+    """
+    get hardened scores
+    :return: hardened tensor
+    :rtype: list
+    """
+    return [
+        [[0, 0, 1], [1, 0, 0]],
+        [[1, 1, 0], [0, 0, 1]],
+        [[1, 1, 0], [0, 1, 0]],
+        [[1, 1, 1], [0, 0, 1]],
+        [[0, 0, 0], [0, 0, 0]]
+    ]
+
+
 # references
+@pytest.fixture(name="hard_votes")
+def get_hard_votes() -> list:
+    """
+    get hard voting results
+    :return: hard votes
+    :rtype: list
+    """
+    return [[1, 0, 1], [1, 1, 1], [1, 2, 0], [1, 1, 2], [0, 0, 0]]
+
+
+@pytest.fixture(name="soft_votes")
+def get_soft_votes() -> list:
+    """
+    get soft voting results
+    :return: soft votes
+    :rtype: list
+    """
+    return [[0.45, 0.25, 0.30],
+            [0.30, 0.30, 0.40],
+            [0.30, 0.55, 0.00],
+            [0.15, 0.15, 0.65],
+            [0.00, 0.00, 0.00]]
+
+
+@pytest.fixture(name="weighted_hard_votes")
+def get_weighted_hard_votes() -> list:
+    """
+    get weighted hard voting results for [0.75, 0.25]
+    :return: hard votes
+    :rtype: list
+    """
+    return [[0.25, 0.00, 0.75],
+            [0.75, 0.75, 0.25],
+            [0.75, 1.00, 0.00],
+            [0.75, 0.75, 1.00],
+            [0.00, 0.00, 0.00]]
+
+
+@pytest.fixture(name="weighted_soft_votes")
+def get_weighted_soft_votes() -> list:
+    """
+    get weighted soft voting results for [0.75, 0.25]
+    :return: soft votes
+    :rtype: list
+    """
+    return [[0.325, 0.275, 0.400],
+            [0.350, 0.350, 0.300],
+            [0.350, 0.475, 0.000],
+            [0.225, 0.225, 0.475],
+            [0.000, 0.000, 0.000]]
+
+
 @pytest.fixture(name="borda_result")
 def get_borda_result() -> list:
     """
