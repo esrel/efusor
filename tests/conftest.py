@@ -79,3 +79,80 @@ def get_borda_result() -> list:
     :rtype: list
     """
     return [[2.0, 2.0, 2.0], [2.0, 2.0, 2.0], [2.5, 3.5, 0.0], [1.0, 1.0, 3.0], [0.0, 0.0, 0.0]]
+
+
+# basic operations
+@pytest.fixture(name="score_max")
+def get_basic_max() -> list:
+    """
+    get max of scores
+    :return: max fusion
+    :rtype: list
+    """
+    return [[0.7, 0.3, 0.5], [0.4, 0.4, 0.6], [0.4, 0.7, 0.0], [0.3, 0.3, 1.0], [0.0, 0.0, 0.0]]
+
+
+@pytest.fixture(name="score_min")
+def get_basic_min() -> list:
+    """
+    get min of scores
+    :return: min fusion
+    :rtype: list
+    """
+    return [[0.2, 0.2, 0.1], [0.2, 0.2, 0.2], [0.2, 0.4, 0.0], [0.0, 0.0, 0.3], [0.0, 0.0, 0.0]]
+
+
+@pytest.fixture(name="score_sum")
+def get_basic_sum() -> list:
+    """
+    get sum of scores (need to be rounded!)
+    :return: sum fusion
+    :rtype: list
+    """
+    return [[0.57, 0.17, 0.27],
+            [0.27, 0.27, 0.47],
+            [0.27, 0.77, 0.00],
+            [0.00, 0.00, 0.97],
+            [0.00, 0.00, 0.00]]
+
+
+@pytest.fixture(name="score_prd")
+def get_basic_product() -> list:
+    """
+    get product of scores (need to be rounded!)
+    :return: product fusion
+    :rtype: list
+    """
+    return [[0.05, 0.02, 0.02],
+            [0.03, 0.03, 0.04],
+            [0.03, 0.09, 0.00],
+            [0.00, 0.00, 0.10],
+            [0.00, 0.00, 0.00]]
+
+
+@pytest.fixture(name="score_med")
+def get_basic_median() -> list:
+    """
+    get median of scores
+    :return: median fusion
+    :rtype: list
+    """
+    return [[0.45, 0.25, 0.30],
+            [0.30, 0.30, 0.40],
+            [0.30, 0.55, 0.00],
+            [0.15, 0.15, 0.65],
+            [0.00, 0.00, 0.00]]
+
+
+@pytest.fixture(name="score_avg")
+def get_basic_average() -> list:
+    """
+    get average of scores (same as median)
+    :return: average fusion
+    :rtype: list
+    """
+    return [[0.45, 0.25, 0.30],
+            [0.30, 0.30, 0.40],
+            [0.30, 0.55, 0.00],
+            [0.15, 0.15, 0.65],
+            [0.00, 0.00, 0.00]]
