@@ -35,10 +35,10 @@ def batch(*vector: np.ndarray) -> np.ndarray:
     return np.stack(vector)
 
 
-def fuse(tensor: np.ndarray,
+def fuse(tensor: list | np.ndarray,
          method: str = "hard_voting",
-         weights: np.ndarray = None
-         ) -> np.ndarray:
+         weights: list | np.ndarray = None
+         ) -> list:
     """
     fusion methods wrapper
     :param tensor: prediction scores as a tensor
@@ -50,6 +50,9 @@ def fuse(tensor: np.ndarray,
     :return: fused scores
     :rtype: np.ndarray
     """
+    tensor = vectorize(tensor) if isinstance(tensor, list) else tensor
+    weights = vectorize(weights) if isinstance(weights, list) else weights
+
     if method in ["hard_voting", "soft_voting", "majority_voting"]:
         result = vote(tensor, method=method, weights=weights)
     elif method in ["min", "max", "sum", "product", "median", "average", "mean"]:
@@ -59,4 +62,4 @@ def fuse(tensor: np.ndarray,
     else:
         raise ValueError(f"unsupported fusion method: {method}")
 
-    return result
+    return result.tolist()

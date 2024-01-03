@@ -15,4 +15,4 @@ def test_fuse(scores: list, weights: list, weighted_hard_votes: list) -> None:
     """
     result = fuse(vectorize(scores), method="hard_voting", weights=vectorize(weights))
 
-    assert result.tolist() == weighted_hard_votes
+    assert result == weighted_hard_votes
