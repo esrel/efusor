@@ -23,9 +23,9 @@ def borda(tensor: np.ndarray) -> np.ndarray:
 def score(tensor: np.ndarray) -> np.ndarray:
     """
     convert tensor (or matrix or vector) values to scores based on rank
-    :param tensor:
+    :param tensor: prediction tensor
     :type tensor: np.ndarray
-    :return:
+    :return: borda scores
     :rtype: np.ndarray
     """
     return np.apply_along_axis(borda_score, -1, tensor)
@@ -38,11 +38,11 @@ def borda_score(vector: np.ndarray, tournament: bool = True) -> np.ndarray:
 
     computes: (score = n - rank - 1), where n is number of classes (length of a vector)
 
-    :param vector:
-    :param tournament:
-    :return:
+    :param vector: prediction vector
     :type vector: np.ndarray
-    :type tournament: bool
+    :param tournament: tournament scoring flag; defaults to True
+    :type tournament: bool, optional
+    :return: borda scores
     :rtype: np.ndarray
     """
     vector = np.nan_to_num(vector)
