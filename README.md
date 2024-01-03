@@ -1,2 +1,1 @@
-# efusor
-Extended Decision Fusion
+# eFusor: Extended Decision Fusion

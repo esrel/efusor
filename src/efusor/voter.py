@@ -70,7 +70,7 @@ def vote(tensor: np.ndarray,
     :param method: fusion method; defaults to "hard_voting"
     :type method: str, optional
     :param weights: predictor weights; defaults to None
-    type weights: np.ndarray, optional
+    :type weights: np.ndarray, optional
     :return: fused scores
     :rtype: np.ndarray
     """
