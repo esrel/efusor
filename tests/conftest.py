@@ -70,6 +70,22 @@ def get_ranks() -> list:
     ]
 
 
+@pytest.fixture(name="norms")
+def get_norms() -> list:
+    """
+    get test min-max norms (need to be rounded!)
+    :return: norm tensor
+    :rtype: list
+    """
+    return [
+        [[0.00, 0.33, 1.00], [1.00, 0.17, 0.00]],
+        [[1.00, 1.00, 0.00], [0.00, 0.00, 1.00]],
+        [[1.00, 1.00, 0.00], [0.29, 1.00, 0.00]],
+        [[0.30, 0.30, 0.30], [0.00, 0.00, 1.00]],
+        [[np.nan, np.nan, np.nan], [0.00, 0.00, 0.00]]
+    ]
+
+
 # references
 @pytest.fixture(name="borda_result")
 def get_borda_result() -> list:
