@@ -1,4 +1,4 @@
-""" Borda Count Decision Fusion """
+""" eFusor: Borda Count Decision Fusion """
 
 __author__ = "Evgeny A. Stepanov"
 __email__ = "stepanov.evgeny.a@gmail.com"
