@@ -51,8 +51,12 @@ def fuse(tensor: np.ndarray,
     :rtype: np.ndarray
     """
     if method in ["hard_voting", "soft_voting", "majority_voting"]:
-        return vote(tensor, method=method, weights=weights)
+        result = vote(tensor, method=method, weights=weights)
     elif method in ["min", "max", "sum", "product", "median", "average", "mean"]:
-        return apply(tensor, method=method)
+        result = apply(tensor, method=method)
     elif method in ["borda"]:
-        return borda(tensor)
+        result = borda(tensor)
+    else:
+        raise ValueError(f"unsupported fusion method: {method}")
+
+    return result
