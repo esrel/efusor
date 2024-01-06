@@ -1,7 +1,86 @@
 # eFusor: Extended Decision Fusion
 
+__Decision Fusion__ is a combination of the decisions of multiple classifiers into a common decision;
+i.e. a classifier ensemble operation.
+The fusion of prediction vectors from multiple classifiers to a single prediction vector, 
+out of which the decision is taken via `argmax`.
+
+eFusor library provides an interface to common Decision Fusion methods;
+such as [Majority Voting](https://en.wikipedia.org/wiki/Majority_rule) and 
+less known [Tournament-style Borda Counting](https://en.wikipedia.org/wiki/Borda_count), 
+as well as basic operations like `max` and `average`.
+
+The expected input for fusion is either `tensor` or `matrix`.  
+
+- `Vector = list[float]` -- ordered list of predictions scores from a model for a query
+- `Matrix = list[Vector]` -- ordered list of vectors; prediction scores for a query from a number of models
+- `Tensor = list[Matrix]` -- ordered list of matrices; batch of predictions for several documents
+
+## Motivation
+
+eFusor was developed specifically to address the scenario 
+where predictors (classifiers) may have different label spaces. 
+Consequently, the library makes distinction between classes predicted with a low score (`0.0`)
+and not predicted classes (`nan`).
+
+## Fusion Methods
+
+### Basic Fusion Methods
+
+Since decision fusion of prediction vectors boils down to 
+the reduction of a matrix to a vector column-wise, 
+i.e. reducing a column vector to a scalar; 
+any mathematical operation on a vector of numbers applies.
+
+In Kittler, Hatef, Duin, and Matas (1998) "On Combining Classifiers". 
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 20-3. 
+The authors use the functions below as basic classifier combination schemes.
+
+
+| method    | notes                                                                     |
+|:----------|:--------------------------------------------------------------------------|
+| `average` | mean value of a vector; requires well calibrated scores.                  |
+| `product` | product rule and product rule issues!                                     |
+| `sum`     | approximation of `product`; assumes posteriors to be not far from priors! |
+| `max`     | approximation of `sum`                                                    |
+| `min`     | bound version of `product`                                                |
+| `median`  | approximation of `sum`; robust version of `average`                       |
+
+
+## Voting Fusion Methods
+
+The basic fusion methods operate with the classifier prediction scores, a real number vectors.
+The problem could be reduced to operate on one-hot vectors;
+in a way first taking per-classifier decision, rather than postponing it.
+Combination of decision vectors is commonly done as a majority rule. 
+
+`scikit-learn` provides [`VotingClassifier`](https://scikit-learn.org/stable/modules/ensemble.html#voting-classifier) 
+as an ensemble method and makes distinction between Hard Voting and Soft Voting.
+While Hard Voting is the Majority Voting;
+Soft Voting is nothing other than `average` 
+(or weighted arithmetic mean, if weights are provided).
+
+### Rank-based Voting Methods
+
+Rank-based voting, specifically [tournament-style borda count](https://en.wikipedia.org/wiki/Borda_count), 
+is a decision technique commonly used is election decisions. 
+While majority voting transforms prediction scores to a one-hot vector;
+rank-based voting transforms it to an integer vector of ranks 
+(the higher the score the lower the rank).
+
+The benefit is that we still consider all predictions for fusion and 
+do not require well calibrated scores.
+
+## Weighted Fusion
+In certain scenarios (e.g. fusion of decisions of rule-based and machine learning predictors),
+it is desired to weigh different classifiers differently. 
+[Weighted Average](https://en.wikipedia.org/wiki/Weighted_arithmetic_mean) is a commonly used scheme.
+
+(While Borda Count also allows to weigh different classifiers differently, it is not implemented).
 
 ## Usage:
+
+The primary decision fusion function is `fuse`. 
 
 ```python
 
