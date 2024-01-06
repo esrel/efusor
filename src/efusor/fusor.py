@@ -53,11 +53,11 @@ def fuse(tensor: list | np.ndarray,
     tensor = vectorize(tensor) if isinstance(tensor, list) else tensor
     weights = vectorize(weights) if isinstance(weights, list) else weights
 
-    if method in ["hard_voting", "soft_voting", "majority_voting"]:
+    if method in {"hard_voting", "soft_voting", "majority_voting"}:
         result = vote(tensor, method=method, weights=weights)
-    elif method in ["min", "max", "sum", "product", "median", "average", "mean"]:
+    elif method in {"min", "max", "sum", "product", "median", "average", "mean"}:
         result = apply(tensor, method=method)
-    elif method in ["borda"]:
+    elif method in {"borda"}:
         result = borda(tensor)
     else:
         raise ValueError(f"unsupported fusion method: {method}")
