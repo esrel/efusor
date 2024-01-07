@@ -283,3 +283,18 @@ def get_selection() -> list:
             [0.4, 0.4, 0.0],
             [0.3, 0.3, 0.3],
             [np.nan, np.nan, np.nan]]
+
+
+@pytest.fixture(name="prioritized")
+def get_prioritized() -> list:
+    """
+    get slice by weights ranks
+    :return: sliced prediction scores
+    :rtype: list
+    """
+    # weights [0.75, 0.25]
+    return [[0.2, 0.3, 0.5],
+            [0.4, 0.4, 0.2],
+            [0.4, 0.4, 0.0],
+            [0.3, 0.3, 0.3],
+            [0.0, 0.0, 0.0]]

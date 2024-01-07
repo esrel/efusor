@@ -1,11 +1,13 @@
 """ test basic fusion """
 
+import pytest
+
 import numpy as np
 
 from efusor.basic import apply
 
 
-def test_apply_tensor_max(scores: list, score_max: list) -> None:
+def test_apply_tensor(scores: list, score_max: list) -> None:
     """
     test apply on tensor
     :param scores: prediction scores
@@ -13,7 +15,44 @@ def test_apply_tensor_max(scores: list, score_max: list) -> None:
     :param score_max: references
     :type score_max: list
     """
-    assert apply(np.array(scores), method="max").tolist() == score_max
+    assert apply(np.array(scores)).tolist() == score_max
+
+
+def test_apply_matrix(scores: list, score_max: list) -> None:
+    """
+    test apply on matrix
+    :param scores: prediction scores
+    :type scores: list
+    :param score_max: references
+    :type score_max: list
+    """
+    for i, matrix in enumerate(scores):
+        assert apply(np.array(matrix)).tolist() == score_max[i]
+
+
+def test_apply_vector(scores: list) -> None:
+    """
+    test apply on vector
+    :param scores: prediction scores
+    :type scores: list
+    """
+    for matrix in scores:
+        for vector in matrix:
+            # ndim check
+            assert np.array_equal(apply(np.array(vector)), np.array(vector), equal_nan=True)
+
+
+def test_apply_scalar(scores: list) -> None:
+    """
+    test apply on vector
+    :param scores: prediction scores
+    :type scores: list
+    """
+    for matrix in scores:
+        for vector in matrix:
+            for scalar in vector:
+                with pytest.raises(IndexError):
+                    apply(np.array(scalar))
 
 
 def test_apply_tensor_min(scores: list, score_min: list) -> None:
