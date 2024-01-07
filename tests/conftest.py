@@ -298,3 +298,18 @@ def get_prioritized() -> list:
             [0.4, 0.4, 0.0],
             [0.3, 0.3, 0.3],
             [0.0, 0.0, 0.0]]
+
+
+@pytest.fixture(name="incremented")
+def get_incremented() -> list:
+    """
+    get max of rank-incremented scores
+    :return: fused prediction scores
+    :rtype: list
+    """
+    # weights [0.75, 0.25] -> addends [2.0, 1.0]
+    return [[2.2, 2.3, 2.5],
+            [2.4, 2.4, 2.2],
+            [2.4, 2.4, 2.0],
+            [2.3, 2.3, 2.3],
+            [1.0, 1.0, 1.0]]
