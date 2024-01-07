@@ -47,6 +47,19 @@ def test_score_vector(scores: list, borda_scores: list, borda_simple: list) -> N
             assert borda_score(np.array(vector), tournament=False).tolist() == borda_simple[i][j]
 
 
+def test_score_scalar(scores: list) -> None:
+    """
+    test borda on vector
+    :param scores: scores
+    :type scores: list
+    """
+    for matrix in scores:
+        for vector in matrix:
+            for scalar in vector:
+                with pytest.raises(np.AxisError):
+                    score(np.array(scalar))
+
+
 def test_borda_tensor(scores: list, borda_result: list) -> None:
     """
     test borda on tensor
@@ -80,3 +93,16 @@ def test_borda_vector(scores: list) -> None:
         for vector in matrix:
             with pytest.raises(np.AxisError):
                 borda(np.array(vector))
+
+
+def test_borda_scalar(scores: list) -> None:
+    """
+    test borda on scalar
+    :param scores: scores
+    :type scores: list
+    """
+    for matrix in scores:
+        for vector in matrix:
+            for scalar in vector:
+                with pytest.raises(np.AxisError):
+                    borda(np.array(scalar))

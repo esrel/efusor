@@ -55,14 +55,13 @@ def get_simple_scores():
     :return: simple scores
     :rtype: list
     """
-    scores = [
+    return [
         [[0.0, 1.0, 2.0], [2.0, 1.0, 0.0]],
         [[2.0, 2.0, 1.0], [1.0, 1.0, 2.0]],
         [[2.0, 2.0, 0.0], [1.0, 2.0, 0.0]],
         [[2.0, 2.0, 2.0], [0.0, 0.0, 2.0]],
         [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]
     ]
-    return scores
 
 
 @pytest.fixture(name="ranks")
@@ -251,3 +250,66 @@ def get_basic_average() -> list:
             [0.30, 0.55, 0.00],
             [0.15, 0.15, 0.65],
             [0.00, 0.00, 0.00]]
+
+
+# decisor
+@pytest.fixture(name="re_ranked")
+def get_reranking() -> list:
+    """
+    get scores re-ranked by weights
+    :return: re-ranked scores
+    :rtype: list
+    """
+    # weights [0.75, 0.25]
+    return [
+        [[0.150, 0.225, 0.375], [0.175, 0.050, 0.025]],
+        [[0.300, 0.300, 0.150], [0.050, 0.050, 0.150]],
+        [[0.300, 0.300, 0.000], [0.050, 0.175, 0.000]],
+        [[0.225, 0.225, 0.225], [0.000, 0.000, 0.250]],
+        [[np.nan, np.nan, np.nan], [0.000, 0.000, 0.000]]
+    ]
+
+
+@pytest.fixture(name="selected")
+def get_selection() -> list:
+    """
+    get slice by weights argmax
+    :return: selected prediction scores
+    :rtype: list
+    """
+    # weights [0.75, 0.25]
+    return [[0.2, 0.3, 0.5],
+            [0.4, 0.4, 0.2],
+            [0.4, 0.4, 0.0],
+            [0.3, 0.3, 0.3],
+            [np.nan, np.nan, np.nan]]
+
+
+@pytest.fixture(name="prioritized")
+def get_prioritized() -> list:
+    """
+    get slice by weights ranks
+    :return: sliced prediction scores
+    :rtype: list
+    """
+    # weights [0.75, 0.25]
+    return [[0.2, 0.3, 0.5],
+            [0.4, 0.4, 0.2],
+            [0.4, 0.4, 0.0],
+            [0.3, 0.3, 0.3],
+            [0.0, 0.0, 0.0]]
+
+
+@pytest.fixture(name="incremented")
+def get_incremented() -> list:
+    """
+    get max of rank-incremented scores
+    :return: fused prediction scores
+    :rtype: list
+    """
+    # weights [0.75, 0.25] -> addends [2.0, 1.0]
+    return [[2.2, 2.3, 2.5],
+            [2.4, 2.4, 2.2],
+            [2.4, 2.4, 2.0],
+            [2.3, 2.3, 2.3],
+            [1.0, 1.0, 1.0]]

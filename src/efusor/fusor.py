@@ -11,28 +11,7 @@ import numpy as np
 from efusor.voter import vote
 from efusor.basic import apply
 from efusor.borda import borda
-
-
-def vectorize(scores: list[float]) -> np.ndarray:
-    """
-    convert sequences of scores & labels into a vector (1d numpy array)
-    :param scores: sequence of prediction scores
-    :type scores: list[float]
-    :return: vector
-    :rtype: np.ndarray
-    """
-    return np.array(scores)
-
-
-def batch(*vector: np.ndarray) -> np.ndarray:
-    """
-    batch vectors into a matrix
-    :param vector:
-    :type vector: np.ndarray
-    :return: matrix
-    :rtype: np.ndarray
-    """
-    return np.stack(vector)
+from efusor.priority import prioritize
 
 
 def fuse(tensor: list | np.ndarray,
@@ -50,15 +29,17 @@ def fuse(tensor: list | np.ndarray,
     :return: fused scores
     :rtype: np.ndarray
     """
-    tensor = vectorize(tensor) if isinstance(tensor, list) else tensor
-    weights = vectorize(weights) if isinstance(weights, list) else weights
+    tensor = np.array(tensor) if isinstance(tensor, list) else tensor
+    weights = np.array(weights) if isinstance(weights, list) else weights
 
-    if method in ["hard_voting", "soft_voting", "majority_voting"]:
+    if method in {"hard_voting", "soft_voting", "majority_voting"}:
         result = vote(tensor, method=method, weights=weights)
-    elif method in ["min", "max", "sum", "product", "median", "average", "mean"]:
+    elif method in {"min", "max", "sum", "product", "median", "average", "mean"}:
         result = apply(tensor, method=method)
-    elif method in ["borda"]:
+    elif method in {"borda"}:
         result = borda(tensor)
+    elif method in {"priority"}:
+        result = prioritize(tensor, weights)
     else:
         raise ValueError(f"unsupported fusion method: {method}")
 

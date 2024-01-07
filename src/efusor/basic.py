@@ -16,8 +16,8 @@ def apply(tensor: np.ndarray, method: str = "max") -> np.ndarray:
     Kittler, Hatef, Duin, and Matas (1998) "On Combining Classifiers".
     IEEE Transactions on Pattern Analysis and Machine Intelligence, 20-3.
 
-    n = # of classes      np.size(matrix, 1) | np.size(tensor, -1)
-    r = # of classifiers  np.size(matrix, 0) | np.size(tensor, -2)
+    labels = # of classes      np.size(matrix, 1) | np.size(tensor, -1)
+    models = # of classifiers  np.size(matrix, 0) | np.size(tensor, -2)
 
     Methods:
         # main
