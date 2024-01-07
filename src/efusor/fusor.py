@@ -13,15 +13,18 @@ from efusor.basic import apply
 from efusor.borda import borda
 
 
-def vectorize(scores: list[float]) -> np.ndarray:
+def vectorize(labels: list[str], scores: dict | list) -> np.ndarray:
     """
     convert sequences of scores & labels into a vector (1d numpy array)
-    :param scores: sequence of prediction scores
-    :type scores: list[float]
-    :return: vector
+    :param labels: ordered list of labels/classes for vectorization
+    :type labels: list[str]
+    :param scores: predictions as {label: score}
+    :type scores: dict | list
+    :return: array
     :rtype: np.ndarray
     """
-    return np.array(scores)
+    return (batch(*[vectorize(labels, x) for x in scores]) if isinstance(scores, list) else
+            np.array([scores.get(x, np.nan) for x in labels]))
 
 
 def batch(*vector: np.ndarray) -> np.ndarray:
@@ -50,8 +53,8 @@ def fuse(tensor: list | np.ndarray,
     :return: fused scores
     :rtype: np.ndarray
     """
-    tensor = vectorize(tensor) if isinstance(tensor, list) else tensor
-    weights = vectorize(weights) if isinstance(weights, list) else weights
+    tensor = np.array(tensor) if isinstance(tensor, list) else tensor
+    weights = np.array(weights) if isinstance(weights, list) else weights
 
     if method in {"hard_voting", "soft_voting", "majority_voting"}:
         result = vote(tensor, method=method, weights=weights)
