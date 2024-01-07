@@ -11,6 +11,7 @@ import numpy as np
 from efusor.voter import vote
 from efusor.basic import apply
 from efusor.borda import borda
+from efusor.priority import prioritize
 
 
 def vectorize(labels: list[str], scores: dict | list) -> np.ndarray:
@@ -62,6 +63,8 @@ def fuse(tensor: list | np.ndarray,
         result = apply(tensor, method=method)
     elif method in {"borda"}:
         result = borda(tensor)
+    elif method in {"priority"}:
+        result = prioritize(tensor, weights)
     else:
         raise ValueError(f"unsupported fusion method: {method}")
 
