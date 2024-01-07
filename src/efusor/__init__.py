@@ -7,10 +7,12 @@ __version__ = "0.1.0"
 
 
 from efusor.fusor import fuse
+from efusor.utils import vectorize
 from efusor.scaler import scale
 
 
 __all__ = [
     "fuse",
-    "scale"
+    "scale",
+    "vectorize"
 ]

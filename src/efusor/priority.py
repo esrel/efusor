@@ -11,7 +11,7 @@ import warnings
 import numpy as np
 
 from efusor.ranker import rank
-from efusor.fusor import batch
+from efusor.utils import batch
 
 
 def ranked_slice(matrix: np.ndarray, weights: np.ndarray) -> np.ndarray:
@@ -37,6 +37,8 @@ def ranked_slice(matrix: np.ndarray, weights: np.ndarray) -> np.ndarray:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore", category=RuntimeWarning)
                 return np.nanmax(sliced, axis=-2)
+
+    return np.full(matrix.shape[1], np.nan)
 
 
 def prioritize(tensor: np.ndarray, weights: np.ndarray) -> np.ndarray:
