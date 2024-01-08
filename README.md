@@ -1,5 +1,12 @@
 # eFusor: Extended Decision Fusion
 
+[![PyPI - Version](https://img.shields.io/pypi/v/efusor)](https://pypi.org/project/efusor/)
+![PyPI - Status](https://img.shields.io/pypi/status/efusor)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/efusor)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/efusor)](https://pypistats.org/packages/efusor/)
+
+## Decision Fusion
+
 __Decision Fusion__ is a combination of the decisions of multiple classifiers into a common decision;
 i.e. a classifier ensemble operation.
 The fusion of prediction vectors from multiple classifiers to a single prediction vector, 
@@ -8,7 +15,8 @@ out of which the decision is taken via `argmax`.
 eFusor library provides an interface to common Decision Fusion methods;
 such as [Majority Voting](https://en.wikipedia.org/wiki/Majority_rule) and 
 less known [Tournament-style Borda Counting](https://en.wikipedia.org/wiki/Borda_count), 
-as well as basic operations like `max` and `average`.
+as well as basic operations like `max` and `average`; 
+implemented using [`numpy`](https://numpy.org).
 
 The expected input for fusion is either `tensor` or `matrix`.  
 
@@ -17,6 +25,14 @@ The expected input for fusion is either `tensor` or `matrix`.
 - `Tensor = list[Matrix]` -- ordered list of matrices; batch of predictions for several documents
 
 ## Motivation
+
+[scikit-learn](https://scikit-learn.org/stable/modules/ensemble.html) 
+provides common [ensemble learning](https://en.wikipedia.org/wiki/Ensemble_learning) 
+methods to combine the predictions of several classifiers;
+and train meta predictors. 
+An alternative to the ensemble learning methods is to use a heuristic.
+
+eFusor provides this heuristic based decision fusion functionality.
 
 eFusor was developed specifically to address the scenario 
 where predictors (classifiers) may have different label spaces. 
@@ -47,7 +63,7 @@ The authors use the functions below as basic classifier combination schemes.
 | `median`  | approximation of `sum`; robust version of `average`                       |
 
 
-## Voting Fusion Methods
+### Voting Fusion Methods
 
 The basic fusion methods operate with the classifier prediction scores, a real number vectors.
 The problem could be reduced to operate on one-hot vectors;
@@ -57,10 +73,10 @@ Combination of decision vectors is commonly done as a majority rule.
 `scikit-learn` provides [`VotingClassifier`](https://scikit-learn.org/stable/modules/ensemble.html#voting-classifier) 
 as an ensemble method and makes distinction between Hard Voting and Soft Voting.
 While Hard Voting is the Majority Voting;
-Soft Voting is nothing other than `average` 
+Soft Voting is nothing other than an average
 (or weighted arithmetic mean, if weights are provided).
 
-### Rank-based Voting Methods
+#### Rank-based Voting Methods
 
 Rank-based voting, specifically [tournament-style borda count](https://en.wikipedia.org/wiki/Borda_count), 
 is a decision technique commonly used is election decisions. 
@@ -71,12 +87,26 @@ rank-based voting transforms it to an integer vector of ranks
 The benefit is that we still consider all predictions for fusion and 
 do not require well calibrated scores.
 
-## Weighted Fusion
+### Weighted Fusion
 In certain scenarios (e.g. fusion of decisions of rule-based and machine learning predictors),
 it is desired to weigh different classifiers differently. 
 [Weighted Average](https://en.wikipedia.org/wiki/Weighted_arithmetic_mean) is a commonly used scheme.
 
+`soft_voting` (an average) and `hard_voting` both implement weighted fusion.
+
 (While Borda Count also allows to weigh different classifiers differently, it is not implemented).
+
+#### Priority Fusion
+
+An alternative to the weighted fusion is to select a prediction vector from a matrix
+with respect to the weight vector.
+However, in the scenario where predictors are allowed to have different label spaces,
+this could lead to the final decision to be an all-NaN vector.
+
+The `priority` fusion method implements such a heuristic,
+and yielding the first non-NaN prediction vector from a matrix with respect to the weight vectors.
+In case of equal weight values, a `max` fusion is applied on the set.
+
 
 ## Usage:
 
@@ -93,21 +123,62 @@ methods = [
 ]
 
 matrix = [[0.25, 0.60, 0.15], [0.00, 0.80, 0.00]]
+weight = [0.75, 0.25] 
 
 # unweighted results
 for method in methods:
-    result = fuse(matrix, method=method)
-    print(f"{method}: {result}")
+    result = fuse(matrix, method=method, digits=3)
+    print(f"{method:<16}: {result}")
 ```
 
 ```text
-max:         [0.25, 0.8, 0.15]
-min:         [0.0, 0.6, 0.0]
-sum:         [0.0, 1.07, 0.0]
-product:     [0.0, 0.16, 0.0]
-median:      [0.125, 0.7, 0.075]
-average:     [0.125, 0.7, 0.075]
-hard_voting: [0, 2, 0]
-soft_voting: [0.125, 0.7, 0.075]
-borda:       [1.0, 4.0, 0.0]
+max             : [0.25, 0.8, 0.15]
+min             : [0.0, 0.6, 0.0]
+sum             : [0.0, 1.067, 0.0]
+product         : [0.0, 0.16, 0.0]
+median          : [0.125, 0.7, 0.075]
+average         : [0.125, 0.7, 0.075]
+hard_voting     : [0, 2, 0]
+soft_voting     : [0.125, 0.7, 0.075]
+borda           : [1.0, 4.0, 0.0]
+```
+
+### Weighted Decision Fusion
+
+```python
+from efusor import fuse
+
+matrix = [[0.25, 0.60, 0.15], [0.00, 0.80, 0.00]]
+weight = [0.75, 0.25] 
+
+for method in ["hard_voting", "soft_voting"]:
+    result = fuse(matrix, method=method, digits=3, weights=weight)
+    print(f"{method:<16}: {result}")
+```
+
+(rounded for readability)
+
+```text
+hard_voting     : [0.0, 1.0, 0.0]
+soft_voting     : [0.188, 0.65, 0.112]
+```
+
+
+### Priority Decision Fusion
+
+- requires `weights` (priorities)
+
+```python
+from efusor import fuse
+
+matrix = [[0.25, 0.60, 0.15], [0.00, 0.80, 0.00]]
+weight = [0.75, 0.25] 
+
+for method in ["priority"]:
+    result = fuse(matrix, method=method, digits=3, weights=weight)
+    print(f"{method:<16}: {result}")
+```
+
+```text
+priority        : [0.25, 0.6, 0.15]
 ```

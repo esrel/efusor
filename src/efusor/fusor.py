@@ -16,7 +16,8 @@ from efusor.priority import prioritize
 
 def fuse(tensor: list | np.ndarray,
          method: str = "hard_voting",
-         weights: list | np.ndarray = None
+         weights: list | np.ndarray = None,
+         digits: int = None
          ) -> list:
     """
     fusion methods wrapper
@@ -26,6 +27,8 @@ def fuse(tensor: list | np.ndarray,
     :type method: str, optional
     :param weights: predictor weights; defaults to None
     :type weights: np.ndarray, optional
+    :param digits: rounding precision; defaults to None
+    :type digits: int, optional
     :return: fused scores
     :rtype: np.ndarray
     """
@@ -39,8 +42,12 @@ def fuse(tensor: list | np.ndarray,
     elif method in {"borda"}:
         result = borda(tensor)
     elif method in {"priority"}:
+        if weights is None:
+            raise ValueError(f"method '{method}' requires weights")
         result = prioritize(tensor, weights)
     else:
         raise ValueError(f"unsupported fusion method: {method}")
+
+    result = np.round(result,  decimals=digits) if digits else result
 
     return result.tolist()
