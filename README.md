@@ -1,5 +1,11 @@
 # eFusor: Extended Decision Fusion
 
+[![Supported Python Versions](https://img.shields.io/pypi/pyversions/efusor.svg)](https://pypi.python.org/pypi/efusor)
+[![PyPI version](https://img.shields.io/pypi/v/efusor.svg)](https://pypi.org/project/efusor/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/efusor.svg)](https://pypistats.org/packages/efusor/)
+
+## Decision Fusion
+
 __Decision Fusion__ is a combination of the decisions of multiple classifiers into a common decision;
 i.e. a classifier ensemble operation.
 The fusion of prediction vectors from multiple classifiers to a single prediction vector, 
