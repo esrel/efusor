@@ -1,8 +1,9 @@
 # eFusor: Extended Decision Fusion
 
-[![Supported Python Versions](https://img.shields.io/pypi/pyversions/efusor.svg)](https://pypi.python.org/pypi/efusor)
-[![PyPI version](https://img.shields.io/pypi/v/efusor.svg)](https://pypi.org/project/efusor/)
-[![PyPI downloads](https://img.shields.io/pypi/dm/efusor.svg)](https://pypistats.org/packages/efusor/)
+[![PyPI - Version](https://img.shields.io/pypi/v/efusor)](https://pypi.org/project/efusor/)
+![PyPI - Status](https://img.shields.io/pypi/status/efusor)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/efusor)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/efusor)](https://pypistats.org/packages/efusor/)
 
 ## Decision Fusion
 
