@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 0.1.3
+
+2024.01.09
+
+- added softmax with nan support to utils
+
 ## 0.1.2
 
 2024.01.07
