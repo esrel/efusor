@@ -4,7 +4,7 @@ import pytest
 
 import numpy as np
 
-from efusor.utils import batch, vectorize
+from efusor.utils import batch, vectorize, softmax
 
 
 def test_batch_tensor(scores: list) -> None:
@@ -89,3 +89,13 @@ def test_vectorize_vector(scores: list) -> None:
         for j, vector in enumerate(matrix):
             assert np.array_equal(vectorize(labels, vector),
                                   np.array(scores[i][j]), equal_nan=True)
+
+
+def test_softmax() -> None:
+    """ test softmax """
+    # test normal
+    assert softmax(np.array([0.25, -0.25, 0.0])).sum() == 1.0
+    # test large number
+    assert softmax(np.array([999, 100, 0.0])).sum() == 1.0
+    # test nan support
+    assert np.nansum(softmax(np.array([0.75, 0.25, 0.0, np.nan]))) == 1.0

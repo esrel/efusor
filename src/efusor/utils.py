@@ -32,3 +32,14 @@ def batch(*vector: np.ndarray) -> np.ndarray:
     :rtype: np.ndarray
     """
     return np.stack(vector)
+
+
+def softmax(vector: np.ndarray) -> np.ndarray:
+    """
+    numerically stable softmax with nan support
+    :param vector: predictions scores (not probability)
+    :type vector: np.ndarray
+    :return: softmax
+    :rtype: np.ndarray
+    """
+    return np.exp(vector - np.nanmax(vector))/np.nansum(np.exp(vector - np.nanmax(vector)))
