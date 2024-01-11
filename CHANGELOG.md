@@ -22,9 +22,7 @@
 
 ## 0.1.0
 
-2024.01.04
-
-Initial release.
+2024.01.04: initial release
 
 - `basic`, `voter` and `borda` (simple and tournament-style) decision fusion methods.
 - support function for vector scaling (`scale`).
