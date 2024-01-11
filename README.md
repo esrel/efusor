@@ -56,8 +56,8 @@ vector = vectorize(labels, scores)
 # array([0.75, 0.25, 0.  ,  nan])
 ```
 
-The function supports scores input as a vector, matrix or a tensor.
-That is a list of dicts or list of lists of dicts.
+The function supports scores input as a vector, a matrix or a tensor.
+That is a dict, a list of dicts or a list of lists of dicts.
 
 ## Fusion Methods
 
