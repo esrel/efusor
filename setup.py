@@ -10,7 +10,7 @@ def read(path):
 setup(
     name='efusor',
     url='https://github.com/esrel/efusor',
-    version='0.1.3',
+    version='0.1.4',
     author='Evgeny A. Stepanov',
     author_email='stepanov.evgeny.a@gmail.com',
     description='Extended Decision Fusion',
