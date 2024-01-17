@@ -39,6 +39,26 @@ where predictors (classifiers) may have different label spaces.
 Consequently, the library makes distinction between classes predicted with a low score (`0.0`)
 and not predicted classes (`nan`).
 
+## Vectorization
+
+eFusor provides a `vectorize` function to do the vectorization 
+making distinction between predicted and not predicted classes.
+The function expects a `list` of class labels 
+and a `dict` of prediction scores.
+
+```python
+from efusor import vectorize
+
+labels = ["A", "B", "C", "D"]
+scores = {"A": 0.75, "B": 0.25, "C": 0.00}
+
+vector = vectorize(labels, scores)
+# array([0.75, 0.25, 0.  ,  nan])
+```
+
+The function supports scores input as a vector, a matrix or a tensor.
+That is a dict, a list of dicts or a list of lists of dicts.
+
 ## Fusion Methods
 
 ### Basic Fusion Methods

@@ -12,11 +12,15 @@ from efusor.voter import vote
 from efusor.basic import apply
 from efusor.borda import borda
 from efusor.priority import prioritize
+from efusor.utils import softmax
 
 
 def fuse(tensor: list | np.ndarray,
          method: str = "hard_voting",
          weights: list | np.ndarray = None,
+         *,
+         cutoff: float = None,
+         scaled: bool = False,
          digits: int = None
          ) -> list:
     """
@@ -27,12 +31,20 @@ def fuse(tensor: list | np.ndarray,
     :type method: str, optional
     :param weights: predictor weights; defaults to None
     :type weights: np.ndarray, optional
+    :param cutoff: prediction cut-off threshold; defaults to None
+    :type cutoff: float, optional
+    :param scaled: if to re-scale final scores (softmax); defaults to False
+    :type scaled: bool, optional
     :param digits: rounding precision; defaults to None
     :type digits: int, optional
     :return: fused scores
     :rtype: np.ndarray
     """
     tensor = np.array(tensor) if isinstance(tensor, list) else tensor
+
+    if cutoff:
+        tensor[tensor < cutoff] = np.nan
+
     weights = np.array(weights) if isinstance(weights, list) else weights
 
     if method in {"hard_voting", "soft_voting", "majority_voting"}:
@@ -48,6 +60,7 @@ def fuse(tensor: list | np.ndarray,
     else:
         raise ValueError(f"unsupported fusion method: {method}")
 
+    result = np.apply_along_axis(softmax, -1, result) if scaled else result
     result = np.round(result,  decimals=digits) if digits else result
 
     return result.tolist()
