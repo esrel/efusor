@@ -1,4 +1,4 @@
-""" eFusor: decision functions """
+""" decision functions """
 
 import numpy as np
 

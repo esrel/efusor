@@ -1,4 +1,4 @@
-""" eFusor: priority fusion """
+""" priority fusion """
 
 import warnings
 

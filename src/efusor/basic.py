@@ -1,4 +1,4 @@
-""" eFusor: basic vector operations for fusion """
+""" basic vector operations for fusion """
 
 import numpy as np
 

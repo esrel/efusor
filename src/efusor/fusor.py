@@ -1,4 +1,4 @@
-""" eFusor: fusion functions """
+""" fusion functions """
 
 import numpy as np
 

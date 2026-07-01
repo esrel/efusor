@@ -1,4 +1,4 @@
-""" eFusor public functions """
+""" public functions """
 
 __author__ = "Evgeny A. Stepanov"
 __email__ = "stepanov.evgeny.a@gmail.com"

@@ -1,4 +1,4 @@
-""" eFusor: Borda Count Decision Fusion """
+""" Borda Count Decision Fusion """
 
 import numpy as np
 

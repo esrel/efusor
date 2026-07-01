@@ -1,4 +1,4 @@
-""" eFusor: scaling/normalization functions """
+""" scaling/normalization functions """
 
 import numpy as np
 

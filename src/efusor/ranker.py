@@ -1,4 +1,4 @@
-""" eFusor: ranking functions """
+""" ranking functions """
 
 import numpy as np
 

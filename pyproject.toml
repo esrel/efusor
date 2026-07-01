@@ -21,7 +21,7 @@ license = "GPL-3.0-or-later"
 license-files = [ "LICEN[CS]E*" ]
 dependencies = [
     "setuptools>=75.8.0",
-    "numpy"
+    "numpy>=2.2.6"
 ]
 
 [project.urls]

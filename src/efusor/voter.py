@@ -1,4 +1,4 @@
-""" eFusor: voting functions """
+""" voting functions """
 
 import numpy as np
 

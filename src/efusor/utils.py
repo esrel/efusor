@@ -1,4 +1,4 @@
-""" eFusor utils """
+""" utils """
 
 import numpy as np
 
