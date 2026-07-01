@@ -1,10 +1,4 @@
-""" eFusor: basic vector operations for fusion """
-
-__author__ = "Evgeny A. Stepanov"
-__email__ = "stepanov.evgeny.a@gmail.com"
-__status__ = "dev"
-__version__ = "0.1.0"
-
+""" basic vector operations for fusion """
 
 import numpy as np
 

@@ -1,10 +1,4 @@
-""" eFusor: fusion functions """
-
-__author__ = "Evgeny A. Stepanov"
-__email__ = "stepanov.evgeny.a@gmail.com"
-__status__ = "dev"
-__version__ = "0.1.0"
-
+""" fusion functions """
 
 import numpy as np
 
@@ -15,13 +9,16 @@ from efusor.priority import prioritize
 from efusor.utils import softmax
 
 
+# pylint: disable=too-many-arguments
+
+
 def fuse(tensor: list | np.ndarray,
          method: str = "hard_voting",
-         weights: list | np.ndarray = None,
+         weights: list | np.ndarray | None = None,
          *,
-         cutoff: float = None,
+         cutoff: float | None = None,
          scaled: bool = False,
-         digits: int = None
+         digits: int | None = None
          ) -> list:
     """
     fusion methods wrapper

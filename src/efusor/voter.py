@@ -1,10 +1,4 @@
-""" eFusor: voting functions """
-
-__author__ = "Evgeny A. Stepanov"
-__email__ = "stepanov.evgeny.a@gmail.com"
-__status__ = "dev"
-__version__ = "0.1.0"
-
+""" voting functions """
 
 import numpy as np
 
@@ -23,8 +17,8 @@ def harden(vector: np.ndarray) -> np.ndarray:
 
 
 def nanaverage(array: np.ndarray,
-               axis: int = None,
-               weights: np.ndarray = None
+               axis: int | None = None,
+               weights: np.ndarray | None = None
                ) -> int | float | np.ndarray:
     """
     average vector w.r.t. weights, if provided
@@ -47,13 +41,13 @@ def nanaverage(array: np.ndarray,
 
 def vote(tensor: np.ndarray,
          method: str = "hard_voting",
-         weights: np.ndarray = None
+         weights: np.ndarray | None = None
          ) -> np.ndarray:
     """
     Voting Fusion
 
     - scikit-learn VotingClassifier
-    - http://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
+    - https://rasbt.github.io/mlxtend/user_guide/classifier/EnsembleVoteClassifier/
 
     Implements "hard" and "soft" voting. In hard voting,
     we predict the final class label as the class label that has

@@ -1,5 +1,16 @@
 # ChangeLog
 
+## 0.2.0 update to `numpy` 2
+
+2026.07.01
+
+- fixed `AxisError` path (`numpy` 2)
+- added `pyproject.toml` (removing `setup.py` & `requirements.txt`)
+- added GitHub workflows
+- fixed
+  - type hints
+  - module meta data (removed)
+
 ## 0.1.4
 
 2024.01.12

@@ -1,10 +1,4 @@
-""" eFusor: ranking functions """
-
-__author__ = "Evgeny A. Stepanov"
-__email__ = "stepanov.evgeny.a@gmail.com"
-__status__ = "dev"
-__version__ = "0.1.0"
-
+""" ranking functions """
 
 import numpy as np
 
