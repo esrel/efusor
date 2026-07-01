@@ -51,7 +51,7 @@ def get_borda_scores() -> list:
 @pytest.fixture(name="borda_simple")
 def get_simple_scores():
     """
-    get borda simple scores
+    get borda simple scores as list
     :return: simple scores
     :rtype: list
     """

@@ -1,0 +1,36 @@
+[build-system]
+requires = [ "setuptools >= 75.8.0" ]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "efusor"
+version = "0.2.0"
+authors = [
+    { name = "Evgeny A. Stepanov", email = "stepanov.evgeny.a@gmail.com" },
+]
+description = "Extended Decision Fusion"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Programming Language :: Python :: 3.10',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Intended Audience :: Science/Research'
+]
+license = "GPL-3.0-or-later"
+license-files = [ "LICEN[CS]E*" ]
+dependencies = [
+    "setuptools>=75.8.0",
+    "numpy"
+]
+
+[project.urls]
+Homepage = "https://github.com/esrel/efusor"
+Issues = "https://github.com/esrel/efusor/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[dependency-groups]
+dev = [ "pytest" ]

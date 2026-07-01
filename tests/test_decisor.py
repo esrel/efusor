@@ -46,7 +46,7 @@ def test_rerank_vector(scores: list, weights: list) -> None:
     """
     for matrix in scores:
         for vector in matrix:
-            with pytest.raises(np.AxisError):
+            with pytest.raises(np.exceptions.AxisError):
                 rerank(np.array(vector), np.array(weights))
 
 
@@ -61,7 +61,7 @@ def test_rerank_scalar(scores: list, weights: list) -> None:
     for matrix in scores:
         for vector in matrix:
             for scalar in vector:
-                with pytest.raises(np.AxisError):
+                with pytest.raises(np.exceptions.AxisError):
                     rerank(np.array(scalar), np.array(weights))
 
 
@@ -104,7 +104,7 @@ def test_select_vector(scores: list, weights: list) -> None:
     """
     for matrix in scores:
         for vector in matrix:
-            with pytest.raises(np.AxisError):
+            with pytest.raises(np.exceptions.AxisError):
                 select(np.array(vector), np.array(weights))
 
 
@@ -119,5 +119,5 @@ def test_select_scalar(scores: list, weights: list) -> None:
     for matrix in scores:
         for vector in matrix:
             for scalar in vector:
-                with pytest.raises(np.AxisError):
+                with pytest.raises(np.exceptions.AxisError):
                     select(np.array(scalar), np.array(weights))

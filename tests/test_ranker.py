@@ -53,7 +53,7 @@ def test_rank_scalar(scores: list) -> None:
     for matrix in scores:
         for vector in matrix:
             for scalar in vector:
-                with pytest.raises(np.AxisError):
+                with pytest.raises(np.exceptions.AxisError):
                     rank(np.array(scalar))
 
 
