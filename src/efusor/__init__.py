@@ -9,10 +9,13 @@ __version__ = "0.2.0"
 from efusor.fusor import fuse
 from efusor.utils import vectorize
 from efusor.scaler import scale
+from efusor.decisor import select, rerank
 
 
 __all__ = [
     "fuse",
     "scale",
-    "vectorize"
+    "vectorize",
+    "select",
+    "rerank",
 ]
